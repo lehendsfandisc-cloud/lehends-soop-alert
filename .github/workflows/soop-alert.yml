@@ -2,7 +2,7 @@ name: SOOP post notification
 
 on:
   schedule:
-    - cron: '3/5 * * * *'
+    - cron: '2/5 * * * *'
   workflow_dispatch:
 
 permissions:
