@@ -1,0 +1,26 @@
+
+name: Discord webhook test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send test notification
+        env:
+          WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          if [ -z "$WEBHOOK_URL" ]; then
+            echo "Discord webhook secret is missing"
+            exit 1
+          fi
+
+          curl --fail-with-body --silent --show-error \
+            --output /dev/null \
+            -H "Content-Type: application/json" \
+            -d '{"content":"✅ 리헨즈 SOOP 알림 테스트 성공! 디스코드 웹훅이 정상적으로 작동합니다."}' \
+            "$WEBHOOK_URL"
+
+          echo "Discord webhook test sent successfully"
